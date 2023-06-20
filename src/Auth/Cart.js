@@ -163,12 +163,26 @@ function Cart() {
       {/* Popup */}
       {showPopup && (
         <div className="modal d-block" role="dialog">
-          <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-dialog modal-dialog-centered model-confirm" role="document">
             <div className="modal-content">
-              
-              <div className="model-body">
-                <img src={img} alt='' style={{ width: '100px', height: '100px' }} className="centered-image" />
+
+              <div className="mode-header border-0">
+                <button type="button" style={{float:'right'}} className=" btn rounded-5 m-2 bg-dark text-white shadow-none" data-bs-dismiss="modal"
+                   onClick={()=> setShowPopup(false)}>X</button>
               </div>
+
+              <div className="model-body">
+                <div className="text-center">
+                  <div className="d-flex justify-content-center pb-2">
+                    <div className="d-flex justify-content-center align-items-center rounded-pill">
+                      <img src={img} alt='' style={{ width: '150px', height: '150px' }} />
+                    </div>
+                  </div>
+                  <h5 class="fw-bold">Your order has been placed </h5>
+                  <p >Sit back and relax as your <br /> product is on it's way!</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
