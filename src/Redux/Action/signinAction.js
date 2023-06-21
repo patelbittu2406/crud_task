@@ -33,7 +33,8 @@ export const login = (email, password) => {
         try {
             const response = await api.post('/auth/login', { email, password });
             const { accessToken } = response.data.data.accessToken;
-            
+            const { user } =response.data.data;
+            console.log(user, "user");
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('user', JSON.stringify(user));
 
@@ -48,13 +49,13 @@ export const login = (email, password) => {
 
 export const forgotPasswordRequest = () => {
     return {
-      type: FORGOT_PASSWORD_REQUEST,
+        type: FORGOT_PASSWORD_REQUEST,
     };
-  };
+};
 export const forgotPasswordSuccess = (email) => {
     return {
         type: FORGOT_PASSWORD_SUCCESS,
-        payload:email,
+        payload: email,
     };
 };
 
@@ -85,13 +86,13 @@ export const forgotPassword = (email) => {
 
 export const confirmPasswordRequest = () => {
     return {
-      type: CONFIRM_PASSWORD_REQUEST,
+        type: CONFIRM_PASSWORD_REQUEST,
     };
-  };
+};
 export const confirmPasswordSuccess = (data) => {
     return {
         type: CONFIRM_PASSWORD_SUCCESS,
-        payload:data,
+        payload: data,
     };
 };
 

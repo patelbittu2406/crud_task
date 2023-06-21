@@ -13,7 +13,11 @@ const Products = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const [showEditPopup, setShowEditPopup] = useState(false);
-  const [editProductData, setEditProductData] = useState(null);
+
+  const [editname, setEditName] = useState('');
+  const [editprice, setEditPrice] = useState('');
+  const [editcategory, setEditCategory] = useState('');
+  const [editdescription, setEditDescription] = useState('');
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -43,10 +47,10 @@ const Products = () => {
     setShowPopup(true);
   };
 
-  const handleEdit = (product) => {
+  const handleEdit = () => {
     console.log('edit clicked');
-    setEditProduct(product);
-    set
+
+    
     setShowEditPopup(true)
   }
 

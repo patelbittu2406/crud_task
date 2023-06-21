@@ -39,7 +39,6 @@ function SignIn() {
         
         dispatch(login(LoginData.email, LoginData.password))
         .then(() => {
-          const accessToken = localStorage.getItem('accessToken');
           const user = JSON.parse(localStorage.getItem('user'));
           if (user.access_type === 'admin') {
             navigate('/dashboard');

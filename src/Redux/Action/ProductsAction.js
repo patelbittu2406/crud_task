@@ -15,9 +15,9 @@ import {
   FETCH_PRODUCT_DETAILS_REQUEST,
   FETCH_PRODUCT_DETAILS_SUCCESS,
   FETCH_PRODUCT_DETAILS_FAILURE,
-  EDIT_COMMENT_FAILURE,
-  EDIT_COMMENT_SUCCESS,
-  EDIT_COMMENT_REQUEST,
+  EDIT_PRODUCT_FAILURE,
+  EDIT_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_REQUEST,
   ADD_TO_CART_SUCCESS,
   ADD_TO_CART_FAILURE
 } from "../Constants/ProductsConstants";
@@ -119,7 +119,32 @@ export const addProduct = (productData) => {
   };
 };
 
+//  EDIT_PRODUCTS
+export const editProductRequest = () => ({
+  type: EDIT_PRODUCT_REQUEST,
+});
 
+export const editProductSuccess = (productId) => ({
+  type: DELETE_PRODUCT_SUCCESS,
+  payload: productId,
+});
+
+export const editProductFailure = (error) => ({
+  type: DELETE_PRODUCT_FAILURE,
+  payload: error,
+});
+
+export const editProduct = (productId, updatedProductData) => async (dispatch) => {
+  try {
+    dispatch(editProductRequest());
+
+    const response = await api.put(`/product/${productId}`, updatedProductData);
+
+    dispatch(editProductSuccess(response.data.data));
+  } catch (error) {
+    dispatch(editProductFailure(error.message));
+  }
+};
 
 //  DELETE_PRODUCTS
 export const deleteProductSuccess = (productId) => ({
