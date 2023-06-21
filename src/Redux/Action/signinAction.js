@@ -33,8 +33,9 @@ export const login = (email, password) => {
         try {
             const response = await api.post('/auth/login', { email, password });
             const { accessToken } = response.data.data.accessToken;
-
+            
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('user', JSON.stringify(user));
 
             dispatch(loginSuccess(response.data.data));
         } catch (error) {

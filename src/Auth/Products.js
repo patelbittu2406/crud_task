@@ -11,11 +11,14 @@ const Products = () => {
   const dispatch = useDispatch();
   const [fileImage, setFileImage] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [editProductData, setEditProductData] = useState(null);
+
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const products = useSelector(state => state.products.products);
   const loading = useSelector(state => state.products.loading);
@@ -25,23 +28,31 @@ const Products = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
- 
+
   const handleDelete = (productId) => {
     dispatch(deleteProduct(productId))
-    .then(() => {
-      dispatch(fetchProducts());
-    })
-    .catch((error) => {
-      console.log('Error deleting product:', error);
-    });
+      .then(() => {
+        dispatch(fetchProducts());
+      })
+      .catch((error) => {
+        console.log('Error deleting product:', error);
+      });
   }
 
   const handleAdd = () => {
     setShowPopup(true);
   };
 
+  const handleEdit = (product) => {
+    console.log('edit clicked');
+    setEditProduct(product);
+    set
+    setShowEditPopup(true)
+  }
+
   const handleClosePopup = () => {
     setShowPopup(false);
+    setShowEditPopup(false)
   };
 
   const handleSaveChanges = () => {
@@ -57,7 +68,7 @@ const Products = () => {
           image: base64Image,
         }
         dispatch(addProduct(productData));
-    
+
       }
       reader.readAsDataURL(fileImage);
     }
@@ -82,7 +93,7 @@ const Products = () => {
 
     <div className="container">
       <h1 className='text-center mt-3'>Products</h1>
-      
+
       <button className="btn btn-primary" onClick={handleAdd}>Add Product</button>
       <div className="row row-cols-md-2">
         {products && products.map((product) => (
@@ -97,7 +108,7 @@ const Products = () => {
                 <div className="row float-right">
                   <Link to={`/viewproduct/${product._id}`} className='col btn fs-5 bi bi-eye'></Link>
                   {/* <div className='col btn fs-5 bi-cart' onClick={handleCart}></div> */}
-                  <div className='col btn fs-5 bi-pencil-square'></div>
+                  <div className='col btn fs-5 bi-pencil-square' onClick={handleEdit}></div>
                   <div className='col btn fs-5 bi-trash3' onClick={() => handleDelete(product._id)}></div>
                 </div>
               </div>
@@ -145,6 +156,45 @@ const Products = () => {
           </div>
         </div>
       )}
+
+      {showEditPopup && (
+        <div className="modal d-block" role="dialog">
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Edit Product</h5>
+                <button type="button" className="btn-close" onClick={handleClosePopup} aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div className="mb-2">
+                    <input type="text" name='name' placeholder='Enter Name' className='form-control' />
+                  </div>
+                  <div className="mb-2">
+                    <input type='text' name="category" placeholder='Enter Category' className='form-control' />
+                  </div>
+                  <div className="mb-2">
+                    <input type="number" name="price" placeholder='Enter Price' className='form-control' />
+                  </div>
+                  <div className="mb-2">
+                    <textarea name="description" className="form-control" tabIndex="4" placeholder="Write Description.."></textarea>
+                  </div>
+                  <div className="mb-2">
+                    <input type="file" name="file" accept='image/*' onChange={handleFile} className='form-control' />
+                  </div>
+                </form>
+              </div>
+              <div className="modal-footer">
+
+                <button type="button" className="btn btn-primary" onClick={handleSaveChanges}>
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
 
   );
